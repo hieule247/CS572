@@ -1,0 +1,21 @@
+{
+  "name": "mean_games",
+  "version": "1.0.0",
+  "description": "This is an application to demonstrate the MEAN stack using my board games hobby",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MEAN",
+    "boardGames"
+  ],
+  "author": "Hieu Le",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.12"
+  }
+}
