@@ -1,0 +1,45 @@
+
+Purpose: Intergrate Angular Project to Express Project
+    0. Prepare:
+        Overview:
+            1. Check endpoints working properly using REST browser plugin
+            2. Create angular-app folder in the application public folder
+            3. Add public/angular-app/app.js (empty for now). This is angular app
+            4. Install AngularJS using npm (Or any other ways)
+                - npm install angular angular-route
+            5. Add angular file dependencies to project (index.html)
+                - <script src= "node_modules/angular/angular.js"></script>
+                - <script src= "node_modules/angular/angular-route.js"></script>
+            6. Include the angular application: app.js
+                - <script src= "angular-app/app.js"></script>
+            7. Enable our node application to reach Angular (add app.use in file appName.js)
+
+        1. Prepare source code
+            - Express app complete
+            - Angualar app complete 
+            - Base on: Express Application.
+            - copy Angular app to Express app to correct structure
+        2. Prepare environment
+            - install angular: npm install angular
+            - modify angular reference
+                <script src="node_modules/angular/angular.js"></script>
+                <script src="node_modules/angular/angular-route"></script>
+
+
+    1. Create: Angular App structure
+        1. Angular app folder: 
+            01. Create folder: angular-app 
+                - public/angular-app
+            02. Create file app.js
+                - purpose: register app-name, config routes
+                - 1. Register app-name:
+                    - angular.module("appName", ["ngRoute"]).config(config);
+                - 2. Implement config function: create Route manager
+                    - key words: $routeProvider, $routeProvider.when(), 
+                    templateUrl, controller, controllerAs
+            03. Create sub-module: submodule-controller.js and submodule.html
+                - 0. Create folder: angular-app/submodule
+                - 1. Create file: angular-app/submodule/submodule-controller.js
+                    - angular.module("appName").controller("controllerName", controllerFunction); 
+                - 2. Register controller.js for using at public/index.html
+                    - <script src="public/angular-app/submodule/submodule-controller.js"></script>

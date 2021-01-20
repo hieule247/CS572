@@ -1,0 +1,7 @@
+<h1>{{vm.title}}</h1>
+<!-- Display repair list -->
+<ul>
+    <li ng-repeat="repair in vm.repairs">
+        <a ng-href="#!/repairs/{{repair._id}}">{{repair.pid}}: {{repair.machineType}}</a>
+    </li>
+</ul>
