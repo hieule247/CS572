@@ -1,0 +1,23 @@
+<h1>{{vm.title}}</h1>
+<!--Display game list-->
+<ul>
+    <li ng-repeat="game in vm.games" {{game.title}}>
+        <a ng-href="#!/games/{{game._id}}">{{game.title}}</a>
+    </li>
+</ul>
+<!-- Button Add -->
+<hr>
+<!-- add new game -->
+<form name="vm.gameForm" ng-submit="vm.addOneGame()" ng-show=true>
+    To add new game please fill in all fields below:<br>
+    Title:<input type="text" name="title" ng-model="vm.newGameTitle"><br>
+    Price:<input type="text" name="price" ng-model="vm.newGamePrice" min=0><br>
+    Year : <input type="number" ng-model="vm.newGameYear" min=1900><br>
+    Rating:<input type="number" name="rating" ng-model="vm.newGameRating" min=0 max=4><br>
+    Minimum Players: <input type="number" name="minPlayer" ng-model="vm.newGameMinPlayers" min=1><br>
+    Maximum Players: <input type="number" name="maxPlayers" ng-model="vm.newGameMaxPlayers" max=100><br>
+    Minimum Age: <input type="number" name="minAge" ng-model="vm.newGameMinAge" min=1><br>
+    Designer: <input type="text" name="designer" ng-model="vm.newGameDesigner"><br>
+    <hr>
+    <button type="submit" class="btn-success">Add Game</button>
+</form>
