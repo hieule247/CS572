@@ -1,0 +1,22 @@
+<h1>Location information detail: <p>{{vm.jobId}}</p></h1>
+
+<!-- address, street, city, state, zip -->
+<form name="vm.locationForm">
+    <p>
+        _id: {{vm.job._id}} <br>
+        address: {{vm.location.address}} <br>
+        <input type="text" name="newLocationAddress" ng-model="vm.newLocationAddress"></input><br>
+        street: {{vm.location.street}} <br>
+        <input type="text" name="newLocationStreet" ng-model="vm.newLocationStreet"></input><br>
+        city: {{vm.location.city}} <br>
+        <input type="text" name="newLocationCity" ng-model="vm.newLocationCity"></input><br>
+        state: {{vm.location.state}} <br>
+        <input type="text" name="newLocationState" ng-model="vm.newLocationState"></input><br>
+        zip: {{vm.location.zip}} <br>
+        <input type="text" name="newLocationZip" ng-model="vm.newLocationZip"></input><br>
+    </p>
+    <hr>
+    <button type="submit" class="btn-success" ng-click="vm.addOneLocation()">Add Location</button>
+    <button type="submit" class="btn-success" ng-click="vm.updOneLocation()">Update Location</button>
+    <button type="submit" class="btn-success" ng-click="vm.delOneLocation()">Delete Location</button>
+    </form>

@@ -1,0 +1,48 @@
+<h1>Job information detail: <p>{{vm.job.title}}</p></h1>
+
+<!-- title, salary, description, experience, postDate, skills, location -->
+<!-- <form name="vm.jobForm" ng-submit="vm.delOneJob()"> -->
+<form name="vm.jobForm">
+    <p>
+        <!-- _id: {{vm.job._id}} <br> -->
+        <!-- title: {{vm.job.title}} <br><input type="text" name="newJobTitle" ng-model="vm.newJobTitle"> <br>  -->
+        <!-- title: <input type="text" ng-model="vm.newJobTitle" value="{{vm.job.title}}"></input><br>
+
+        salary: <input type="text" ng-model="vm.newJobSalary" ng-attr-value="{{vm.job.salary | currency}}"> <br> 
+        description:<input type="text" name="newJobDescription" ng-model="vm.newJobDescription"> <br> 
+        experience: <input type="text" name="newJobExperience" ng-model="vm.newJobExperience"> <br> 
+        postDate: <input type="date" name="newJobPostDate" ng-model="vm.newJobPostDate"> <br>  
+        skills: <input type="text" name="newJobSkills" ng-model="vm.newJobSkills"> <br> 
+        location: <input type="text" name="newJobLocation" ng-model="vm.newJobLocation"> <br>    
+          -->
+        <!-- _id: {{vm.job._id}} <br>
+        title: {{vm.job.title}} <br>
+        salary: {{vm.job.salary  | currency}} <br>
+        description: {{vm.job.description}} <br>
+        experience: {{vm.job.experience}} <br>
+        postDate: {{vm.job.postDate}} <br>
+        skills:  {{vm.job.skills}} <br>
+        location: {{vm.job.location}} <br><br> -->
+
+        _id: {{vm.job._id}} <br>
+        title: {{vm.job.title}} <br>
+        <input type="text" name="newJobTitle" ng-model="vm.newJobTitle"></input><br>
+
+        salary: {{vm.job.salary  | currency}} <br>
+        <input type="number" name="newJobSalary" ng-model="vm.newJobSalary"> <br>
+
+        description: {{vm.job.description}} <br>
+        <input type="text" name="newJobDescription" ng-model="vm.newJobDescription"><br> 
+        experience: {{vm.job.experience}} <br>
+        <input type="text" name="newJobExperience" ng-model="vm.newJobExperience"><br>
+        postDate: {{vm.job.postDate}} <br>
+        <input type="date" name="newJobPostDate" ng-model="vm.newJobPostDate"> <br>
+        skills:  {{vm.job.skills}} <br>
+        <input type="text" name="newJobSkills" ng-model="vm.newJobSkills"> <br>
+        location: {{vm.job.location}} <br>
+        <input type="text" name="newJobLocation" ng-model="vm.newJobLocation"> <br>
+    </p>
+    <hr>
+    <button type="submit" class="btn-success" ng-click="vm.delOneJob()">Delete Job</button>
+    <button type="submit" class="btn-success" ng-click="vm.updOneJob()">Update Job</button>
+    </form>
