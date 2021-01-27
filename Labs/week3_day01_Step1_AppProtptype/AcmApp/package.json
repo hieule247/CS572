@@ -1,0 +1,19 @@
+{
+  "name": "acm_app",
+  "version": "1.0.0",
+  "description": "ACM - Attendance Check Management. Using MEAN",
+  "main": "app1.js",
+  "scripts": {
+    "start": "node app1.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MEAN",
+    "Attendance"
+  ],
+  "author": "Hieu Le",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
