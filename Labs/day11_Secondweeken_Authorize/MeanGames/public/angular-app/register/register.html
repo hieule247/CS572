@@ -1,0 +1,23 @@
+<h1>Register</h1>
+<DIV ng-if="vm.message" class="alert alert-success" role="alert">
+    <P>{{ vm.message}}</P>
+</DIV>
+<DIV ng-if="vm.err" class="alert alert-danger" role="alert">
+    {{vm.err}}
+</DIV>
+<hr>
+<FORM ng-hide="vm.message" name="register" ng-submit="vm.register()">
+    <DIV class="form-group">
+        <label for="username">Username</label>
+        <input type="username" class="form-control" id="username" placeholder="Username" ng-model="vm.username" autocapitalize="none"/>
+    </DIV>
+    <DIV class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" ng-model="vm.password" autocapitalize="none"/>
+    </DIV>
+    <DIV class="form-group">
+        <label for="password-repeat">Repeat Password</label>
+        <input type="password" class="form-control" id="password-repeat" placeholder="Password" ng-model="vm.rePassword" autocapitalize="none"/>
+    </DIV>
+    <hr><BUTTON type="submit" class="btn btn-success">Register</BUTTON>
+</FORM>

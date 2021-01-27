@@ -1,0 +1,14 @@
+<h1>Search Games</h1>
+<!--Display game list-->
+<ul>
+    <li ng-repeat="game in vm.games" {{game.title}}>
+        <a ng-href="#!/games/{{game._id}}">{{game.title}}</a>
+    </li>
+</ul>
+<!-- Button Add -->
+<hr>
+<!-- add new game -->
+<form name="vm.gameForm" ng-submit="vm.searchGames()" ng-show=true>
+    Input game title:<input type="text" name="title" ng-model="vm.newGameTitle">
+    <button type="submit" class="btn-success">Search Games</button>
+</form>

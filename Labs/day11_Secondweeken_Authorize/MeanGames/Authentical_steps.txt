@@ -1,0 +1,218 @@
+Database has collection: users
+
+1. Step 01 - Create file "data/users-model.js": Create file users-model.js
+
+	var mongoose = require("mongoose");
+	var userSchema = new mongoose.Schema({
+    		username:{
+        		type: String,
+        		unique: true,
+        		required: true
+    		},
+    		password: {
+        		type: String,
+        		required: true
+    		}
+	});
+	// Generate Model
+	mongoose.model("User", userSchema, "users");
+
+2. Step 02 - Regist "userSchema" to file "api/data/db.js": Modify file db.js.
+	// Add 01 line code.
+	require("./users-model.js");    
+
+3. Step 03 - Regist "authenticcation routes" to file "api/routes/index.js": Modify file index.js.
+	// ----- Add 03 blocks code.
+	......
+	// 1. Add block code 01:
+	var controllerUsers = require("../controllers/users-controller.js");    
+	......
+	// 2. Add block code 02:
+	router.route("/users/register")
+		.post(controllerUsers.register)
+		;
+	
+	router.route("/users/login")
+		.porst(controllerUsers.login)
+		;
+
+	// 3. Add block code 03
+	module.exports = router;
+	
+4. Step 04 - Create file "controllers/users-controller.js": Create file users-controller.js
+
+// declare for using
+var mongoose = require("mongoose");
+var User = mongoose.model("User");
+
+// All api to access DB users here
+module.exports.register = function(req, res){
+    var nameFunc = "register";
+    // 0. log for debuging
+    console.log("api...controller..." + nameFunc);
+    // 1. local variable
+    var response = {status: 0, message: []}
+    // 2. parameters: parse and check
+    var name = req.body.name;
+    var username = req.body.username;
+    var password = req.body.password;
+    // 3. MAIN
+    User.create({
+        name: name,
+        username: username,
+        password: password
+    }, function(err, user){
+        if (err){
+            response.status = 500; // server error
+            response.message= err;
+        } else {
+            response.status = 200; // ok
+            response.message= user;
+        }
+        // 3.9: Done - send data back
+        console.log("end...api...: " + nameFunc + "...", resp.message);
+        res.status(res.status).json(response.message); 
+    });
+}
+
+module.exports.login = function(req, res){
+    var nameFunc = "login";
+    // 0. log for debuging
+    console.log("api...controller..." + nameFunc);
+    // 1. local variable
+    var response = {status: 0, message: []}
+    // 2. parameters: parse and check
+    var username = req.body.username;
+    var password = req.body.password;
+    // 3. MAIN
+    User.findOne({username: username}).exec(function(err, user){
+        if (err){
+            response.status = 500; // server error
+            response.message= err;
+        } else if (!user){
+            response.status = 404; // not found
+            response.message= "not found ..." + username;
+        } else {
+            response.status = 200; // ok
+            response.message= user;
+        }
+        // 3.9 Done. send back data
+        console.log("end...api...: " + nameFunc + "...", resp.message);
+        res.status(res.status).json(response.message); 
+    });
+}
+---- End step 04
+
+5. Step 05: using encript: install bcrypt-nodejs ---- encrypt: .hashSync(password, .genSaltSync(10)) ---- .compareSync(pw1, pw2); 
+	5.1: Step 05.1 - install bcrypt-nodejs:
+		npm install bcrypt-nodejs
+	
+	5.2: Step 05.2 - modify controller to use encrypt: Update file .../users-controller.js
+		.....
+		var bcrypt = require("bcrypt-nodejs");
+		.....
+		var password = req.body.password;
+		password = bcrypt.hashSync(password, bcrypt.genSalSync(10));
+		.....
+		if (user && !bcrypt.comapreSync(password, user.password)){
+			status = 401;
+			message= "Unauthorize";
+		}
+
+6. Step 06: using JWT token: install jsonwebtoken 
+	6.1: Step 06.1 - install jsonwebtoken:
+		npm install jsonwebtoken
+	6.2: Step 06.2 - modify controller to use token: Update file .../users-controller.js
+		......
+		var jwt = require("jsonwebtoken");
+            	// .... Step06.2.2: modify login function
+            	var token = jwt.sign({username: user.username}, "cs572", {expiresIn: 3600});
+            	response.status = 200; // ok
+            	response.message= {success: true, token: token};
+	6.3: Step 06.3 - add function authenticate: Update file .../users-controller.js
+// authenticate: check valid token
+module.exports.authenticate = function(req, res, next){
+    var nameFunc = "login";
+    // 0. log for debuging
+    console.log("api...controller..." + nameFunc);
+    // 1. local variable
+    var response = {status: 0, message: []}
+    // 2. parameters: parse and check
+    var headerExist = req.headers.authorization;
+    if (!headerExist){
+        response.status = 403;
+        response.message= "No token provided";
+        // send back and return
+        console.log("end...api...: " + nameFunc + "...", response.message);
+        res.status(response.status).json(response.message); 
+        return; // nothing
+    }
+    // Exist header
+    token = headerExist.split(" ")[1];
+    jwt.verify(token, "cs572", function(err, decoded){
+        if (err){
+            response.status = 401;
+            response.message= "Unauthorized";
+        } else{
+            req.user = decoded.username;
+            next();
+        }
+    });
+}
+///---- end step 6
+
+======== PART II - angular-app side
+
+3. Step 03 - Regist "authenticcation routes" to file "app.js": Modify file app.js.
+	// ----- Add 01 blocks code.
+        .when("/register", {
+            templateUrl: "angular-app/register/register.html",
+            controller: "RegisterController",
+            controllerAs: "vm"
+        })
+
+
+Purpose: Intergrate Angular Project to Express Project
+    0. Prepare:
+        Overview:
+            1. Check endpoints working properly using REST browser plugin
+            2. Create angular-app folder in the application public folder
+            3. Add public/angular-app/app.js (empty for now). This is angular app
+            4. Install AngularJS using npm (Or any other ways)
+                - npm install angular angular-route
+            5. Add angular file dependencies to project (index.html)
+                - <script src= "node_modules/angular/angular.js"></script>
+                - <script src= "node_modules/angular/angular-route.js"></script>
+            6. Include the angular application: app.js
+                - <script src= "angular-app/app.js"></script>
+            7. Enable our node application to reach Angular (add app.use in file appName.js)
+
+        1. Prepare source code
+            - Express app complete
+            - Angualar app complete 
+            - Base on: Express Application.
+            - copy Angular app to Express app to correct structure
+        2. Prepare environment
+            - install angular: npm install angular
+            - modify angular reference
+                <script src="node_modules/angular/angular.js"></script>
+                <script src="node_modules/angular/angular-route"></script>
+
+
+    1. Create: Angular App structure
+        1. Angular app folder: 
+            01. Create folder: angular-app 
+                - public/angular-app
+            02. Create file app.js
+                - purpose: register app-name, config routes
+                - 1. Register app-name:
+                    - angular.module("appName", ["ngRoute"]).config(config);
+                - 2. Implement config function: create Route manager
+                    - key words: $routeProvider, $routeProvider.when(), 
+                    templateUrl, controller, controllerAs
+            03. Create sub-module: submodule-controller.js and submodule.html
+                - 0. Create folder: angular-app/submodule
+                - 1. Create file: angular-app/submodule/submodule-controller.js
+                    - angular.module("appName").controller("controllerName", controllerFunction); 
+                - 2. Register controller.js for using at public/index.html
+                    - <script src="public/angular-app/submodule/submodule-controller.js"></script>
