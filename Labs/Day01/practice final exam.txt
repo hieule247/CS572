@@ -1,0 +1,519 @@
+Roadmap and Outcomes
+• Node.js: write asynchronous (non-blocking) code. Understand node platform to start a project.
+• Express: setup express and get requests and send back responses. REST API.
+• MongoDB: what NoSQL DB looks like. Full API interacting with DB.
+• AngularJS: Investigate AngularJS and architect it. A single page application.
+• MEAN application: Learn by example. We will create a MEAN Games 
+application.
+
+Modular Programming
+• Best practice to have building blocks
+• You do not want everything running from a single file (hard to maintain).
+• Separate the main application file from the modules you build.
+• Separate loading from invocation.
+• Each module exposes some functionality for other modules to use.
+
+Exports
+• Export more than one function.
+• Encapsulation; reducing side effects, improve code maintainability.
+• Avoid using .js in require. This will enable changing the structure of your modules in the future. If a file becomes complex, we can put it in a folder by itself as a module and make index.js backwards compatible.
+• When require searches (require(name)):
+• Search for name.js, if not found
+• Search for index.js in folder name
+• Three ways to export
+• Single function
+• Multi functions
+• Return value
+
+Create talk/index.js file
+var filename = "index.js";
+var hello = function(name) {
+console.log("Hello "+ name);
+}
+
+var intro = function() {
+console.log("I'm a node file called "+ filename);
+}
+
+module.exports = {
+greeting : hello,
+intro : intro
+}
+app02.js file
+var goodbye = require("./talk");
+talk.greeting();
+talk.intro();
+Run file
+node app02.js
+
+Single Threaded Node
+• Node is single threaded.
+• One process to deal with all requests from all visitors.
+• Node.js is designed to address I/O scalability (not computational scalability).
+• I/O: reading files and working with DB.
+• No user should wait for another users DB access.
+• What if a user requests a computationally intense operation? (compute Fibonacci)
+• Timers enable asynchronous code to run in separate threads. This enables scalable I/O operations. Perform file reading without everything else having to wait.
+
+Benefits of Named Callbacks
+•Read-ability
+•Test-ability
+•Maintain-ability
+
+Node Package Management (npm)
+•Define and manage dependencies using npm.
+•Using packages enables code reuse, and not 
+writing things from scratch.
+•Move code around and use latest versions of 
+dependencies.
+
+Using npm
+• Creating package.json can be done with npm init
+• Follow the steps npm gives you.
+• Entry point: this is the file that will contain the application starting point (the file to run).
+• We use (app.js)
+• This creates package.json having all the information you provided.
+• Use it to add dependencies, installing packages, development vs testing dependencies, run 
+scripts.
+• Ignoring dependencies when uploading to git.
+
+What is Express
+•Web framework for MEAN stack.
+• Listen to incoming requests and respond.
+•Deliver static html files.
+•Compile and deliver html.
+•Return JSON.
+
+Express Application
+•Add dependency on Express.
+•Require Express.
+• Listen to requests (port) at URLs.
+•Return HTTP status codes.
+•Response HTML or JSON.
+
+Routing using Express
+• Routing is listening to requests on certain URLs and doing something on the server side 
+then sending a response back.
+• Route definition
+• HTTP method
+• Path
+• Function to run when route is matched
+
+Express Router
+•Separation of concerns
+•Instantiating the router
+•Applying router to subset of routes
+•Testing routes using REST plugins
+
+Express Controller
+• Separation of Concerns
+• Creating API (REST API)
+• What are controllers and thier functionality
+• Controles what happens when a route is visited.
+• Separate logic from routing from UI code.
+• Map controllers to routes.
+
+URL parameters in Express
+• What are URL parameters?
+• How can you get information about one game?
+• You need to know the game of interest (user input).
+• Get user input through the URL (localhost:3000/api/games/2021).
+• Create a route for each id? :(
+• Parametrize it :)
+• How to define URL parameters in routes.
+• .route("/games/:gameId")
+• Use URL parameters in controllers.
+
+Other Ways to get Input
+• How to pass data from client to server?
+• URL parameter (Express native support)
+• Query string (GET method, Express native support)
+• Form body (POST method, Express no native support)
+• Getting queryString data in Express controllers.
+• Middleware for parsing forms.
+• Getting form data in Express controllers.
+
+Nodemon
+• Development tool, not for production system.
+• Improve development experience and provide information.
+• Install Nodemon globally (not related to an application).
+• Use Nodemon.
+• Configure Nodemon.
+
+MAIN POINT
+• NodeJS is a single threaded Java Script 
+platform. NodeJS enables the use of 
+JavaScript for full stack development.
+• Express is a JavaScript web framework 
+that enables the development of 
+request-response-based applications.
+• Separation of concerns is achieved 
+in Express using routers and controllers. 
+This enables the development of more 
+complex application. Routers and 
+controllers enable easier understanding 
+and debugging of applications.
+
+NoSQL Database Types
+• Key-value store, ArangoDB
+• Store unique key and value, high scalability for caching (session management)
+• Document store, MongoDB
+• Store semi-structured data in document format, no schema insert(mobile applications)
+• Wide- column store, Amazon DynamoDB
+• Store in columns not rows, fast (catalogs, recommendation engines)
+• Graph databases, Amazon Neptune
+• Store data as nodes and edges, show connections (reservation systems)
+• More
+
+NoSQL DB Design
+• What is all the data you wish to output (at once) on a pages.
+• Put that information in one place.
+• If on some page you wish to display some of the information from another document.
+• Add what needs to be displayed and include an ID to link to the other document.
+• Optimize for the most common operation.
+• Reduce updates for the most common changeable items.
+• Increase speed of displaying most common pages.
+• Keep number of Collections (Tables) to a minimum.
+• Try to reduce each page to one collection (or minimum number of joined collections)
+• Most common operations must run faster (even at the expense of less common operations)
+
+How to Design a Document
+• Why not have one Collection and store everything in it?
+• Not good logically and performance.
+• Hard to maintain.
+• A review is for a game, so why not only have one Collection of Games.
+• A review can exists by itself.
+• Get all positive reviews, negative, …
+• A Game could also have several reviews.
+• Collections may reference each other.
+• You do not use a collection to get data from another collection.
+• What you want from another collection embed in your collection.
+
+JSON and BSON
+• JSON is what you use in your application.
+• JSON is a close representation of what MongoDB stores.
+• BSON is Binary-JSON, it is what MongoDB uses.
+• BSON not human readable but maintains the flexibility and ease of 
+use of JSON plus the speed of binary format.
+• MongoDB accepts JSON and returns JSON (but stores it as BSON).
+
+JSON ID
+• MongoDB creates unique ID for a document when created.
+• _id property is what MongoDB creates.
+• The value is ObjectId("5f9aef68980db44d37c1aaed") 
+unique combination of time (Unix epoch) , machine ID, 
+process ID, and counter.
+
+MAIN POINT - MongoDB
+• MongoDB is a document-based NoSQL 
+database. It is ideal for mobile 
+application development.
+• We can use mongoDB driver to connect 
+to a MongoDB instance from our node 
+code. You will need a connection, make 
+sure you create only once and use it 
+several times. Also make sure it is 
+available when needed (since it is 
+asynchronous).
+• The best practice when working with 
+mongoDB from your node code is to 
+create a connection then have all your 
+DB related code in controllers.
+
+Why Mongoose
+• Create a controller for each document and define everything you need there.
+• Too much work and could end up repeating a lot of the same stuff.
+• Errors and inconsistencies.
+• Better to have one schema (define it once) and use it for all my documents.
+• Mongoose comes to the rescue.
+• Helps us focus on building our application and building the API.
+• Abstracts complexity of using native driver.
+• Provides helper methods to work with DB.
+• We can define the structure of our data in the application (schema).
+
+API Design Golden Rules
+• Always return a response. Never leave a request hanging.
+• Return the correct HTTP status code.
+• Return contents or a message.
+
+Error Traps
+• Missing query string parameters.
+• Correct query string parameter types.
+
+
+MAIN POINT
+• Using Mongoose is better than using 
+MongoDB driver directly. Mongoose 
+enables us to focus on building our 
+application by abstracting complexity of 
+using the native driver. Mongoose 
+provides helper methods to speed up 
+development.
+• We define the structure of our data using 
+Schemas. Schemas not only define the 
+types of fields in the document but 
+also provide constraints and default 
+values.
+• Mongoose makes CRUD 
+operations simpler and easier. Mongoose 
+also enforces non-blocking operations.
+
+Some Built-in Filters
+• Currency
+• Number
+• String
+• Date
+• Limit
+• Order
+• Filter
+
+Architecture
+• Route
+• app.js
+• Create a folder for each part of the application (main, joke, about, …) folder contents
+• Templates file (main.html, joke.html, …)
+• Controller file (main-controller.js, joke-controller.js, …)
+
+MAIN POINT - AngularJS
+• AngularJS is the UI part of a MEAN 
+application. It enables building flexible 
+Single Page Applications (SPA).
+• AngularJS enforces an MVC 
+architecture. AngularJS enforces proper 
+software engineering practices, 
+separation of concern.
+• AngularJS has a set of built-in directive 
+to speed up the development of web 
+applications. At the same time, you may 
+write your own custom directives and 
+filters.
+
+Setup - INTERGRATION
+• Check endpoints working properly using REST browser plugin.
+• Create angular-app folder in the application public folder.
+• Add public/angular-app/app.js file (empty for now). This is angular app.
+• Install AngularJS using npm (or any other way)
+• npm i angular angular-route
+• Add the angular files as dependencies to project
+• <script src="node_modules/angular/angular.js"></script>
+<script src="node_modules/angular-route/angular-route.js"></script>
+• Include the angular application
+• <script src="angular-app/app.js"></script>
+• Enable our node application to reach Angular (add app.use) • App.use("/node_modules", express.static(path.join(__dirname, "node_modules")));
+
+
+
+
+
+
+
+
+1.Router routing
+- Routing is 
+- Listening to requests on certain URLs 
+- and doing some things on server side 
+- then sending a response back.
+- Router definition:
+- HTTP method: What is HTTP is used: GET, POST, PUT, DELETE
+- Path:
+- Function to run when route is matched.
+
+2.Full stack development:
+- Build front-end and back-end of a website or web application.
+- Front-end: interact with browser.
+- Back-end: interact with database and server.
+- Database driven application.
+
+3. node
+4. express
+- Web framework for MEAN stack.
+- Listen to incoming request and response.
+- Deliver static html files.
+- Compile and deliver html files.
+- Return json
+
++ Create package json:
+- npm init
++ Add dependency on express:
+- npm install express -save
++ Run the application:
+- npm start.
++ Server listen:
+- var app = express();
+- app.listen(3000, function(){
+Console.log(“Listening to port …..3000”);});
+
+5.mongodb driver, mongoose db driver
++ NoSQL DB design:
+- What is all data you wish to output (at once) on a pages.
+- Put that information in one place.
+- If on some pages you wish to display some of information from another document.
+- Add what needs to be displayed and include an ID to link to the other document.
+- Optimize for the most common operation.
+- Reduce updates for the most common change able items.
+- Increase speed of displaying most common pages
+- Keep number of Collections(Tables) to a minimum.
+- Try to reduce each page to one collection (or minimum to number of joined collections).
+- Most common operations must run faster (even at the expense of less operations)
+
++ Mongo DB - how to design a document:
+- Why not have one Collection and store everything in it?
+- Not good logical and performance.
+- Hard to maintain.
+- A Review is for a game, so why not only have one Collection of Games.
+- A review can exists by itself.
+- Get all positive reviews, negative,…
+- A game could also have several reviews.
+- Collections may reference to each other.
+- You do not use a collection to data from another collection.
+- What you want from another collection embed in your collection.
++ JSON and BSON:
+- JSON - Java Script Object Notation:
+- JSON is what you use in your application.
+- JSON is a close representation of what mongoDB stores.
+- BSON - Binary JSON
+- BSON It’s what mongoDB uses.
+- BSON not human readable but maintain the flexibility and easy of use of JSON plus the speed of binary format.
+- MongoDB accepts JSON and returns JSON (But stores it as BSON).
++ JSON ID:
+- MongoDB creates unique ID for a document when created.
+- _id property is what mongoDB creates.
+- The values is ObjectId("5f9aef68980db44d37c1aaed"): 
+- Unique combination of time (Unique epoch), machine ID, process ID, and counter.
++ MongoDB command
++ Run mongoDB:
+- mongo
+- mongo -version
+- exit
++ Database
+- List all database in your system:
+- show dbs
+- select database for work with:
+- use dbName
+- Create new database: make sure it does not exist
+- use newDBName
+- Get the current database being used:
+- db (or db.getName();)
+- Delete database: 
+- db.dropDatabase();
++ Collection:
+- List collections in current database:
+- use dbName
+- show collections.
+- Create a collection:
+- db.createCollection(“newCollectionName”);
+- Delete a collection:
+- db.CollectionName.drop();
+- Add a document in current collection:
+- db.CollectionName.insert({“name”: “MongoDB”, “role”: “Database”});
+- List documents in current collection:
+- db.CollectionName.find();
+- db.CollectionName.find().pretty();
+- Insert multi documents at once:
+- db.CollectionName.insert([{1: 1}, {2:2}, {3:3}]);
+- List base on documentID in current collection:
+- db.collectionName.find({“_id”: ObjectId("5f9aef68980db44d37c1aaed")});
+- List base on name in current collection:
+- db.collectionName.find({“name”: “Angular”});
+- Sorting: 1 for ascending, -1 for descending:
+- db.collectionName.find().sort({“name”: 1});
+- Limited return fields:
+- db.collectionName.find({}, {“name”: true});
+- db.collectionName.find({}, {“name”: true, “_id”: false});
+- Update document:
+- db.collectionName.update({“name”: “Angular”}, {$set:{“language”: “java script”}}, {multi: true});
+- Delete document from collection:
+- db.collectionName.remove({“name”: “Express”});
++ Import mongoDB from BSON file:
+- mongorestore --db newDB --gzip dump/newDB.
++ Export mongoDB data as BSON file:
+- mongodump --db newDB
+- mongodump --db newDB --gzip: compress BSON file
++ Export data as JSON file:
+- mongoexport --db newDB --collection theCollection
+- mongoexport --db newDB --collection theCollection --out out/theCollection.json.
+- mongoexport --db newDB --collection theCollection --out out/theCollection.json 				--jsonArray --pretty
++ Import from JSON file:
+- mongoexport --db newDB --collection theCollection --jsonArray 							output/theCollection.json
+
++ MongoDB and Node:
++ Install driver:
+- npm install mongodb --save
++ Create file to manage connection: dbcoonection.js:
+- var mongoClient = require(“mongodb”).MongoClient;
+- var dbUrl = “mongodb://localhost:27012/meanGamesDB”;
+- var _connection = null;
+- var open = function(){
+mongoClient.connect(dbUrl, {useUnifiedTopology: true}, function(err, client){
+If (err){
+Console.log(“DB connection failed”);
+Return;
+}
+_connection = client.db(“meanGamesDB”);
+Console.log(“DB connection open…”, _connection);
+});
+}
+
+- var get = function(){
+Return _connection;
+}
+
+- module.exports = {
+- openConnection: open,
+- get: get
+}
+
++ Open connection when application start: modify app1.js
+- require(“./api/data/dbconnection.js”).open();
++ Use the db connection in controller.
+- var dbConnection = require(“../data/dbconnection.js”);
+- module.exports.gameGetAll = function(req, res){
+- var db = dbConnection.get();
+- var collection = db.collection(“games”);
+- collection.find().skip(offset).limit(count).toArray(function(err, games){
+- if (err) {
+} else {
+- res.status(200).json(games);
+}
+});
+}
+
++ Mongoose:
+- Why mongoose:
+- Create a controller for each document and define everything you need there.
+- to much work and could end up repeating a lot of same stuff
+- Error and inconsistencies.
+- Better to have one schema (define it once) and use it for all my documents.
+- Mongoose come to the rescue:
+- Help us focus on building our application and building the API.
+- Abstracts complexity of using native driver.
+- provider method to working with DB.
+- We can define the structure of of our data in the application (schema)
++ Install mongoose:
+- npm install mongoose --save.
++ Connect mongoose:
+- create file controller/data/db.js
+- var mongoose = require(“mongoose”);
+- var dbUrl = “mongodb://localhost:27012/meanGamesDB”;
+- mongoose.connect(dbUrl);
+ 
+
+6. angular js
+7. replica + shard
+8. rest
+9. MEAN:
+- M - MongoDB:
+- NoSQL database (document store).
+- Stores JSON documents.
+- E - Express:
+- Java Script Web framework.
+- On top of Node.
+- A - Angular:
+- Java Script UI framework.
+- Single Page Application.
+- N - Node JS:
+- Java Script Server Side platform.
+- Single thread, fast and scalable.
+
+
+a
