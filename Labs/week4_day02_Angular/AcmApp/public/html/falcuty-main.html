@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Falculty Main Page</title>
+  <link href="../css/custom-falcuty.css" rel="stylesheet" />
+</head>
+<body>
+
+
+<form action="/action_page.php" style="border:1px solid #ccc">
+  <div class="container">
+    
+    <h2>
+      <label for="txtSearch">Student Information:</label>
+      <input type="text" placeholder="Enter Search Info" name="txtSearch">
+      <button>Search</button>
+    </h2>
+    <hr>
+    <label for="studentId"><b>Student ID</b></label>
+    <input type="text" placeholder="Enter Student ID" name="studentId" required>
+
+    <br><label for="firstname"><b>First Name</b></label>
+    <input type="text" placeholder="Enter First Name" name="firstname" required>
+
+    <label for="lname"><b>Last Name</b></label>
+    <input type="text" placeholder="Enter Last Name" name="lastname" required>
+    
+    <br><label for="username"><b>User Name</b></label>
+    <input type="text" placeholder="Enter User Name" name="username" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    
+    <p>Return to home page (welcome.html)<a href="../welcome.html" style="color:dodgerblue"> Home page</a>.</p>
+
+    <hr>
+    <div>
+      <button type ="submit" onclick="alert('add student click')">Add Student</button>
+      <button type ="submit" onclick="alert('update student click')">Update Student</button>
+      <button type ="submit" onclick="alert('delete student click')">Delete Student</button>
+      <button type ="submit" onclick="alert('delete student click')">Take attendance</button>
+    </div>
+  </div>
+</form>
+
+<h2>Students List</h2>
+<table>
+  <tr>
+    <th>Student ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Attendance Inforamtion</th>
+  </tr>
+  <tr>
+    <td><a href="#">611600</a></td>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td><a href="#">611600</a></td>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+  <tr>
+    <td><a href="#">611600</a></td>
+    <td>Ernst Handel</td>
+    <td>Roland Mendel</td>
+    <td>Austria</td>
+  </tr>
+  <tr>
+    <td><a href="#">611600</a></td>
+    <td>Island Trading</td>
+    <td>Helen Bennett</td>
+    <td>UK</td>
+  </tr>
+  <tr>
+    <td><a href="#">611600</a></td>
+    <td>Laughing Bacchus Winecellars</td>
+    <td>Yoshi Tannamuri</td>
+    <td>Canada</td>
+  </tr>
+  <tr>
+    <td><a href="#">611600</a></td>
+    <td>Magazzini Alimentari Riuniti</td>
+    <td>Giovanni Rovelli</td>
+    <td>Italy</td>
+  </tr>
+</table>
+
+</body>
+</html>
